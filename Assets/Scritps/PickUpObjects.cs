@@ -2,21 +2,16 @@ using UnityEngine;
 
 public class PickUpObjects : MonoBehaviour
 {
-    [Header("Configuración de Objetos")]
+    [Header("Referencias")]
     public GameObject ObjectToPickUp;
     public GameObject PickedObject;
-    public Transform interactionZone;
 
-    [Header("Posición en la Mano")]
-    public Vector3 handOffset = new Vector3(0.5f, -0.1f, 1.0f);
+    [Header("Mano Derecha")]
+    public Transform handHoldPoint;
 
-    [Header("Movimiento y Peso")]
-    public float followSpeed = 10f;
-    public float dragAmount = 1.5f; 
-
-    [Header("Inspección")]
+    [Header("Configuración de Inspección")]
     public float rotateSpeed = 10f;
-    private Quaternion freeRotation;
+    private bool isInspecting = false;
 
     void Update()
     {
@@ -30,53 +25,42 @@ public class PickUpObjects : MonoBehaviour
         else
         {
             if (Input.GetKeyDown(KeyCode.Z)) Drop();
-            HandleObjectLogic();
+
+            HandleInspection();
         }
     }
 
-    void HandleObjectLogic()
+    void HandleInspection()
     {
-        Vector3 targetPos = transform.position
-                            + (transform.forward * handOffset.z)
-                            + (transform.right * handOffset.x)
-                            + (transform.up * handOffset.y);
-
-        float mouseX = Input.GetAxis("Mouse X") * dragAmount;
-        float mouseY = Input.GetAxis("Mouse Y") * dragAmount;
-        Vector3 swayOffset = (transform.right * -mouseX) + (transform.up * -mouseY);
-
-        PickedObject.transform.position = Vector3.Lerp(
-            PickedObject.transform.position,
-            targetPos + (swayOffset * 0.01f),
-            Time.deltaTime * followSpeed
-        );
-
-        if (Input.GetMouseButton(1)) 
+        if (Input.GetMouseButton(1))
         {
+            isInspecting = true;
             float h = rotateSpeed * Input.GetAxis("Mouse X");
             float v = rotateSpeed * Input.GetAxis("Mouse Y");
 
-            PickedObject.transform.Rotate(transform.up, -h, Space.World);
-            PickedObject.transform.Rotate(transform.right, v, Space.World);
-
-            freeRotation = Quaternion.Inverse(transform.rotation) * PickedObject.transform.rotation;
+            PickedObject.transform.Rotate(Vector3.up, -h, Space.World);
+            PickedObject.transform.Rotate(Vector3.right, v, Space.World);
         }
-        else
+        else if (isInspecting)
         {
-            PickedObject.transform.rotation = Quaternion.Slerp(
-                PickedObject.transform.rotation,
-                transform.rotation * freeRotation,
-                Time.deltaTime * followSpeed
+            PickedObject.transform.localRotation = Quaternion.Slerp(
+                PickedObject.transform.localRotation,
+                Quaternion.identity,
+                Time.deltaTime * 5f
             );
+
+            if (Quaternion.Angle(PickedObject.transform.localRotation, Quaternion.identity) < 0.1f)
+            {
+                isInspecting = false;
+            }
         }
     }
 
     void PickUp()
     {
         PickedObject = ObjectToPickUp;
-        PickedObject.GetComponent<PickableObject>().isPickable = false;
-
-        freeRotation = Quaternion.Inverse(transform.rotation) * PickedObject.transform.rotation;
+        PickableObject objectScript = PickedObject.GetComponent<PickableObject>();
+        objectScript.isPickable = false;
 
         Rigidbody rb = PickedObject.GetComponent<Rigidbody>();
         if (rb != null)
@@ -84,17 +68,25 @@ public class PickUpObjects : MonoBehaviour
             rb.useGravity = false;
             rb.isKinematic = true;
         }
+
+        PickedObject.transform.SetParent(handHoldPoint);
+
+        PickedObject.transform.localPosition = objectScript.positionOffset;
+        PickedObject.transform.localRotation = Quaternion.Euler(objectScript.rotationOffset);
     }
 
     void Drop()
     {
         PickedObject.GetComponent<PickableObject>().isPickable = true;
+        PickedObject.transform.SetParent(null);
+
         Rigidbody rb = PickedObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.useGravity = true;
             rb.isKinematic = false;
         }
+
         PickedObject = null;
     }
 }
