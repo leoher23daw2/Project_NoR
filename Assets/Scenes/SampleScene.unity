@@ -1847,7 +1847,7 @@ GameObject:
   - component: {fileID: 1518260016}
   - component: {fileID: 1518260015}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Escalera_Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1940,11 +1940,11 @@ Transform:
   m_GameObject: {fileID: 1518260014}
   serializedVersion: 2
   m_LocalRotation: {x: -0.2250111, y: 0.0040956214, z: 0.003963189, w: 0.9743396}
-  m_LocalPosition: {x: 245.88, y: 9.5, z: 244.1424}
-  m_LocalScale: {x: 4.1613746, y: 0.4721565, z: 19.363005}
+  m_LocalPosition: {x: 0.09115646, y: 0.051999997, z: -0.14749268}
+  m_LocalScale: {x: 0.04161375, y: 0.0047215656, z: 0.19363005}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2125593194}
   m_LocalEulerAnglesHint: {x: -26.009, y: 0.395, z: 0.375}
 --- !u!1 &1556438935
 GameObject:
@@ -2512,6 +2512,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1518260018}
   - {fileID: 8566489696868357847}
   - {fileID: 5972026879395527042}
   - {fileID: 5082241479719880450}
@@ -12206,4 +12207,3 @@ SceneRoots:
   - {fileID: 948170318}
   - {fileID: 543450652458583714}
   - {fileID: 1187037721}
-  - {fileID: 1518260018}
