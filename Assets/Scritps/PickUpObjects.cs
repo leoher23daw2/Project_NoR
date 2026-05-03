@@ -5,13 +5,24 @@ public class PickUpObjects : MonoBehaviour
     [Header("Referencias")]
     public GameObject ObjectToPickUp;
     public GameObject PickedObject;
-
-    [Header("Mano Derecha")]
+    public Transform brazoDerechoControl;
     public Transform handHoldPoint;
 
-    [Header("Configuración de Inspección")]
-    public float rotateSpeed = 10f;
-    private bool isInspecting = false;
+    [Header("Ajustes de Posición")]
+    public Vector3 offsetInspeccion = new Vector3(-0.2f, 0.1f, -0.1f);
+    public float suavizado = 10f;
+
+    private Vector3 posOriginalLocal;
+    private Quaternion rotOriginalLocal;
+
+    void Start()
+    {
+        if (brazoDerechoControl != null)
+        {
+            posOriginalLocal = brazoDerechoControl.localPosition;
+            rotOriginalLocal = brazoDerechoControl.localRotation;
+        }
+    }
 
     void Update()
     {
@@ -25,66 +36,69 @@ public class PickUpObjects : MonoBehaviour
         else
         {
             if (Input.GetKeyDown(KeyCode.Z)) Drop();
-
-            HandleInspection();
         }
+
+        ManejarBrazo();
     }
 
-    void HandleInspection()
+    void ManejarBrazo()
     {
-        if (Input.GetMouseButton(1))
-        {
-            isInspecting = true;
-            float h = rotateSpeed * Input.GetAxis("Mouse X");
-            float v = rotateSpeed * Input.GetAxis("Mouse Y");
+        if (brazoDerechoControl == null) return;
 
-            PickedObject.transform.Rotate(Vector3.up, -h, Space.World);
-            PickedObject.transform.Rotate(Vector3.right, v, Space.World);
+        if (PickedObject != null && Input.GetMouseButton(1))
+        {
+            brazoDerechoControl.localPosition = Vector3.Lerp(brazoDerechoControl.localPosition, posOriginalLocal + offsetInspeccion, Time.deltaTime * suavizado);
         }
-        else if (isInspecting)
+        else
         {
-            PickedObject.transform.localRotation = Quaternion.Slerp(
-                PickedObject.transform.localRotation,
-                Quaternion.identity,
-                Time.deltaTime * 5f
-            );
-
-            if (Quaternion.Angle(PickedObject.transform.localRotation, Quaternion.identity) < 0.1f)
-            {
-                isInspecting = false;
-            }
+            brazoDerechoControl.localPosition = Vector3.Lerp(brazoDerechoControl.localPosition, posOriginalLocal, Time.deltaTime * suavizado);
+            brazoDerechoControl.localRotation = Quaternion.Slerp(brazoDerechoControl.localRotation, rotOriginalLocal, Time.deltaTime * suavizado);
         }
     }
 
     void PickUp()
     {
         PickedObject = ObjectToPickUp;
-        PickableObject objectScript = PickedObject.GetComponent<PickableObject>();
-        objectScript.isPickable = false;
+        PickableObject script = PickedObject.GetComponent<PickableObject>();
+        script.isPickable = false;
+
 
         Rigidbody rb = PickedObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.useGravity = false;
             rb.isKinematic = true;
+            rb.useGravity = false;
+            rb.velocity = Vector3.zero; 
         }
 
-        PickedObject.transform.SetParent(handHoldPoint);
+        Collider col = PickedObject.GetComponent<Collider>();
+        if (col != null) col.enabled = false; 
 
-        PickedObject.transform.localPosition = objectScript.positionOffset;
-        PickedObject.transform.localRotation = Quaternion.Euler(objectScript.rotationOffset);
+
+        PickedObject.transform.SetParent(handHoldPoint, false);
+
+        PickedObject.transform.localPosition = script.positionOffset;
+        PickedObject.transform.localRotation = Quaternion.Euler(script.rotationOffset);
+
+        PickedObject.transform.localScale = Vector3.one;
+
+        Debug.Log("Objeto cogido: " + PickedObject.name);
     }
 
     void Drop()
     {
         PickedObject.GetComponent<PickableObject>().isPickable = true;
+
+        Collider col = PickedObject.GetComponent<Collider>();
+        if (col != null) col.enabled = true;
+
         PickedObject.transform.SetParent(null);
 
         Rigidbody rb = PickedObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.useGravity = true;
             rb.isKinematic = false;
+            rb.useGravity = true;
         }
 
         PickedObject = null;
