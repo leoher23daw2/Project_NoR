@@ -68,7 +68,7 @@ public class PickUpObjects : MonoBehaviour
         {
             rb.isKinematic = true;
             rb.useGravity = false;
-            rb.velocity = Vector3.zero; 
+            rb.linearVelocity = Vector3.zero; 
         }
 
         Collider col = PickedObject.GetComponent<Collider>();
