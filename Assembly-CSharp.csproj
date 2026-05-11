@@ -49,23 +49,21 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.4f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scritps\New Scripts\Objetos.cs" />
-    <Compile Include="Assets\Scritps\New Scripts\Camara.cs" />
-    <Compile Include="Assets\Scritps\New Scripts\Luna.cs" />
+    <Compile Include="Assets\Scritps\New Scripts\Inventario-K.cs" />
     <Compile Include="Assets\Scritps\ParpadeoVela.cs" />
     <Compile Include="Assets\Scritps\PickUpObjects.cs" />
-    <Compile Include="Assets\Scritps\New Scripts\Recojer.cs" />
     <Compile Include="Assets\Scritps\FirstPersonController.cs" />
-    <Compile Include="Assets\Scritps\Luna.cs" />
+    <Compile Include="Assets\Scritps\New Scripts\Personaje-K.cs" />
+    <Compile Include="Assets\Scritps\New Scripts\Recojer-K.cs" />
     <Compile Include="Assets\Scritps\PickableObject.cs" />
-    <Compile Include="Assets\Scritps\New Scripts\HUD.cs" />
+    <Compile Include="Assets\Scritps\New Scripts\Luna-K.cs" />
+    <Compile Include="Assets\Scritps\New Scripts\Camara-K.cs" />
+    <Compile Include="Assets\Scritps\New Scripts\sol-K.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\Scritps\New Scripts\sol.cs" />
-    <Compile Include="Assets\Scritps\New Scripts\Inventario.cs" />
-    <Compile Include="Assets\Scritps\sol.cs" />
-    <Compile Include="Assets\Scritps\New Scripts\Mirino.cs" />
+    <Compile Include="Assets\Scritps\New Scripts\HUD-K.cs" />
+    <Compile Include="Assets\Scritps\New Scripts\Objetos-K.cs" />
     <Compile Include="Assets\Scritps\PlayerInputHandler.cs" />
-    <Compile Include="Assets\Scritps\New Scripts\Personaje.cs" />
+    <Compile Include="Assets\Scritps\New Scripts\Mirino-K.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
