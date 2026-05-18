@@ -6,6 +6,10 @@ TagManager:
   tags:
   - PlayerInteractionZone
   - Interactable
+  - "Simbolo_Pi\xF9"
+  - Simbolo_Diviso
+  - Simbolo_Meno
+  - Simbolo_Per
   layers:
   - Default
   - TransparentFX

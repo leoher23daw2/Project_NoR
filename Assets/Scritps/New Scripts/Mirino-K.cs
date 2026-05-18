@@ -8,6 +8,8 @@ public class Crosshair : MonoBehaviour
 
     void Update()
     {
+        if (Camera.main == null) return;
+
         Ray ray = Camera.main.ScreenPointToRay(
             new Vector3(Screen.width / 2f, Screen.height / 2f)
         );
@@ -23,6 +25,5 @@ public class Crosshair : MonoBehaviour
             crosshairImage.color = new Color(1f, 1f, 1f, 0.45f);
             crosshairImage.transform.localScale = Vector3.one;
         }
-
     }
 }

@@ -122,7 +122,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.54999995, z: -0.046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5586231355878249214}
   m_Father: {fileID: 3334335231544431906}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &6259383779758907612
@@ -432,14 +433,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1722167192904842667}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.015963335, y: -0.7166603, z: 0.0039958544, w: 0.69722825}
-  m_LocalPosition: {x: -0.292, y: -0.132, z: 0.58}
-  m_LocalScale: {x: 6.6666675, y: 6.666666, z: 6.666666}
+  m_LocalRotation: {x: 0.015963333, y: -0.7166603, z: 0.003995855, w: 0.69722825}
+  m_LocalPosition: {x: -0.29199538, y: -0.6819999, z: 0.6260001}
+  m_LocalScale: {x: 6.666668, y: 6.6666656, z: 6.666666}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1137940916695496281}
   - {fileID: 6893373337793751110}
-  m_Father: {fileID: 3334335231544431906}
+  m_Father: {fileID: 7399561165782185230}
   m_LocalEulerAnglesHint: {x: 1.604, y: -91.589, z: -0.992}
 --- !u!1 &2859899971388877678
 GameObject:
@@ -452,7 +453,6 @@ GameObject:
   - component: {fileID: 3334335231544431906}
   - component: {fileID: 4209888919667726418}
   - component: {fileID: 7052672597232010951}
-  - component: {fileID: 6415119525156673495}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -473,7 +473,6 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5586231355878249214}
   - {fileID: 4287951919419471684}
   - {fileID: 9185471842077058478}
   - {fileID: 7399561165782185230}
@@ -526,24 +525,6 @@ MonoBehaviour:
   characterController: {fileID: 4209888919667726418}
   mainCamera: {fileID: 6259383779758907612}
   playerInputHandler: {fileID: 1559401591189749776}
---- !u!114 &6415119525156673495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2859899971388877678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5543edf927eabd4990f38df4787a763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickUpObjects
-  ObjectToPickUp: {fileID: 0}
-  PickedObject: {fileID: 0}
-  brazoDerechoControl: {fileID: 6893373337793751110}
-  handHoldPoint: {fileID: 4236851183088222595}
-  offsetInspeccion: {x: -0.2, y: 0.1, z: -0.1}
-  suavizado: 10
 --- !u!1 &4362629146581432324
 GameObject:
   m_ObjectHideFlags: 0
