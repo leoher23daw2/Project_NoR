@@ -40,6 +40,26 @@ public class Inventario : MonoBehaviour
         Debug.Log("Zaino pieno!");
         return false;
     }
+    public bool HaOggetto(Sprite icona)
+    {
+        for (int i = 0; i < oggetti.Length; i++)
+            if (oggetti[i] == icona) return true;
+        return false;
+    }
 
+    public bool RimuoviOggetto(Sprite icona)
+    {
+        for (int i = 0; i < oggetti.Length; i++)
+        {
+            if (oggetti[i] == icona)
+            {
+                oggetti[i] = null;
+                slots[i].sprite = null;
+                slots[i].color = Color.clear;
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

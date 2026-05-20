@@ -19,6 +19,10 @@ public class Puzzle : MonoBehaviour
     public MonoBehaviour playerMovement;
     public MonoBehaviour mouseLook;
 
+    [Header("Distanza")]
+    public float distanzaMax = 3f;
+    private Transform player;
+
     [Header("Materiali simboli")]
     public Renderer[] simboloPiu;
     public Renderer[] simboloMeno;
@@ -30,14 +34,21 @@ public class Puzzle : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Update()
     {
+        if (Time.timeScale == 0) return;
+
+        float distanza = Vector3.Distance(transform.position, player.position);
+
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if (!inPuzzle) EntraPuzzle();
-            else EsciPuzzle();
+            if (!inPuzzle && distanza <= distanzaMax)
+                EntraPuzzle();
+            else if (inPuzzle)
+                EsciPuzzle();
         }
 
         if (inPuzzle && Input.GetMouseButtonDown(0))
@@ -83,8 +94,13 @@ public class Puzzle : MonoBehaviour
     void RegistraSimboло(string simbolo)
     {
         if (indice >= 4) return;
+        if (indice > 0 && sequenzaGiocatore[indice - 1] == simbolo) return;
+
         sequenzaGiocatore[indice] = simbolo;
         indice++;
+
+        Debug.Log($"Registrato: {simbolo} ({indice}/4)");
+
         if (indice == 4) ControllaSequenza();
     }
 
